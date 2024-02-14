@@ -574,12 +574,12 @@ public:
 
   NodeStatus tick() override
   {
-    std::shared_ptr<TestStruct> test_struct_ptr;
-    if (!getInput("input", test_struct_ptr))
+    std::optional<TestStruct> test_struct_opt;
+    if (!getInput("input", test_struct_opt))
     {
       throw std::runtime_error("NodeWithDefaultNullopt: failed input");
     }
-    if (!test_struct_ptr)
+    if (!test_struct_opt)
     {
       std::cout << "vec_ptr is std::nullopt" << std::endl;
     }
@@ -617,7 +617,7 @@ TEST(PortTest, Default_Issues_768)
   std::string xml_txt_nullptr = R"(
     <root BTCPP_format="4" >
       <BehaviorTree>
-        <NodeWithDefaultNullptr input=""/>
+        <NodeWithDefaultNullptr/>
       </BehaviorTree>
     </root>)";
   tree = factory.createTreeFromText(xml_txt_nullptr);
@@ -628,7 +628,7 @@ TEST(PortTest, Default_Issues_768)
   std::string xml_txt_nullopt = R"(
     <root BTCPP_format="4" >
       <BehaviorTree>
-        <NodeWithDefaultNullopt input=""/>
+        <NodeWithDefaultNullopt/>
       </BehaviorTree>
     </root>)";
   tree = factory.createTreeFromText(xml_txt_nullopt);
